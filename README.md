@@ -24,8 +24,8 @@ The power-up isn't published/listed yet. You'll need to install it as a custom p
 - Click 'Create new Power-Up', if this is your first time using a custom power-up, you'll need to agree to a 'Joint Developer Agreement' first.
 - Give it a name: `Focus cards`
 - On the baic information tab, fill:
-	- Iframe-connector-URL: `http://www.lodeclaassen.nl/trello-focus-cards/power-up/`
-	- Symbol: `https://cdn.glitch.com/5ea3fc68-67a1-482d-970a-2fa28650720d%2Ffont-awesome-dot-circle.png?v=1622965576357`
+	- Iframe-connector-URL: `https://www.lodeclaassen.nl/trello-focus-cards/power-up/`
+	- Symbol: `https://www.lodeclaassen.nl/trello-focus-cards/power-up/favicon.png`
 - On the permissions tab, enable:
 	- `board-buttons`
 	- `card-detail-badges`
