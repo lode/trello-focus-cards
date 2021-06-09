@@ -1,7 +1,7 @@
 /* global TrelloPowerUp */
 
 var Promise = TrelloPowerUp.Promise;
-const FOCUS_ICON = 'https://cdn.glitch.com/5ea3fc68-67a1-482d-970a-2fa28650720d%2Ffont-awesome-dot-circle.png?v=1622965576357';
+const FOCUS_ICON = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/favicon.png';
 
 function getBoardId(t) {
   return t.board('id').then(function(board) { return board.id; });
