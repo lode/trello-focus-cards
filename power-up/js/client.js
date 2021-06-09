@@ -1,7 +1,8 @@
 /* global TrelloPowerUp */
 
 var Promise = TrelloPowerUp.Promise;
-const FOCUS_ICON = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/favicon.png';
+const FILTER_ICON_LIGHT = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/img/filter-icon-light.png';
+const FILTER_ICON_DARK = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/img/filter-icon-dark.png';
 
 function getBoardId(t) {
   return t.board('id').then(function(board) { return board.id; });
@@ -172,7 +173,10 @@ TrelloPowerUp.initialize({
     return [
       {
         text: 'Focus',
-        icon: FOCUS_ICON,
+        icon: {
+          light: FILTER_ICON_LIGHT,
+          dark:  FILTER_ICON_DARK,
+        },
         condition: 'edit',
         callback: function(t){
           return applyFilter(t);
