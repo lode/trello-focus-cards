@@ -64,6 +64,8 @@ If you use the power-up, please ask questions or share what can be improved by [
 
 For bugs [issues](https://github.com/lode/trello-focus-cards/issues) or [Pull Requests](https://github.com/lode/trello-focus-cards/pulls) are welcome!
 
+To develop improvements there is a [Glitch](https://glitch.com/edit/#!/trello-focus-cards) which you can remix.
+
 
 ## Licence
 
