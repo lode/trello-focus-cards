@@ -19,22 +19,21 @@ Focus cards don't adjust notifications, uou'll still get them if you're a member
 
 The power-up isn't published/listed yet. You'll need to install it as a custom power-up until then.
 
-- Go to https://trello.com/power-ups/admin.
-- Select the workspace you want to use (you'll need to be an admin of that workspace).
-- Click 'Create new Power-Up', if this is your first time using a custom power-up, you'll need to agree to a 'Joint Developer Agreement' first.
-- Give it a name: `Focus cards`
-- On the baic information tab, fill:
+- Go to https://trello.com/power-ups/admin and click 'Create new Power-Up' the top right.
+- Fill:
+	- Name: `Focus cards`
+	- Workspace: the workspace you want to use the power-up in (you'll need to be an admin of that workspace).
 	- Iframe-connector-URL: `https://www.lodeclaassen.nl/trello-focus-cards/power-up/`
+- If this is your first time using a custom power-up, you'll need to agree to a 'Joint Developer Agreement' first.
+- On the baic information tab, fill:
 	- Symbol: `https://www.lodeclaassen.nl/trello-focus-cards/power-up/favicon.png`
 - On the permissions tab, enable:
 	- `board-buttons`
 	- `card-detail-badges`
 	- `authorization-status`
 	- `show-authorization`
-- On the users tab, add:
-	- Other admins from your workspace, so they can also manage the power-up
-- Save and go to the board where you want to use it.
-- Open the power-ups marketplace overlay, click on the 'custom' section on the left, and add 'Focus cards'.
+- Go to the board where you want to use it and open the power-ups marketplace overlay.
+- Click on the 'custom' section on the left, and add 'Focus cards'.
 
 
 ## First time use
