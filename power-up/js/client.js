@@ -34,7 +34,7 @@ async function setupUserLabel(t) {
   const token = await getApiToken(t);
   window.Trello.setToken(token);
   try {
-    window.Trello.post('/labels', postData, function(response) {
+    return window.Trello.post('/labels', postData, function(response) {
       const userId = getUserId(t);
       const userLabel = {
         id: response.id,
@@ -79,6 +79,10 @@ async function getUserLabel(t, makeSure=false) {
 
 async function hasFocus(t) {
   const focusLabel = await getUserLabel(t);
+  if (focusLabel === undefined) {
+    return false;
+  }
+  
   return t.card('labels').then(function(card) {
     return card.labels.some(function(label) {
       return (label.id === focusLabel.id);
