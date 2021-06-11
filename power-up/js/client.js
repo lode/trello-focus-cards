@@ -5,34 +5,43 @@ const FILTER_ICON_LIGHT = 'https://www.lodeclaassen.nl/trello-focus-cards/power-
 const FILTER_ICON_DARK = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/img/filter-icon-dark.png';
 
 function getBoardId(t) {
-	return t.board('id').then(function(board) { return board.id; });
-};
+	return t.board('id').then(function(board) {
+		return board.id;
+	});
+}
 
 function getBoardUrl(t) {
-	return t.board('url').then(function(board) { return board.url; });
-};
+	return t.board('url').then(function(board) {
+		return board.url;
+	});
+}
 
 function getCardId(t) {
-	return t.card('id').then(function(card) { return card.id; });
-};
+	return t.card('id').then(function(card) {
+		return card.id;
+	});
+}
 
 function getUserId(t) {
 	return t.getContext().member;
 }
 
 function getUserName(t) {
-	return t.member('fullName').then(function(member) { return member.fullName; });
+	return t.member('fullName').then(function(member) {
+		return member.fullName;
+	});
 }
 
 async function setupUserLabel(t) {
 	const postData = {
-		name: 'Focus ' + await getUserName(t),
-		color: null,
+		name:    'Focus ' + await getUserName(t),
+		color:   null,
 		idBoard: await getBoardId(t),
 	};
 	
 	const token = await getApiToken(t);
 	window.Trello.setToken(token);
+	
 	try {
 		return window.Trello.post('/labels', postData, function(response) {
 			const userId    = getUserId(t);
@@ -40,14 +49,19 @@ async function setupUserLabel(t) {
 				id:   response.id,
 				name: response.name,
 			};
+			
 			t.set('board', 'shared', 'focus-cards-label-' + userId, userLabel);
+			
 			return userLabel;
-		}, function(error) {
-			t.alert({message: JSON.stringify(error, null, '\t')})
+		},
+		function(error) {
+			t.alert({
+				message: JSON.stringify(error, null, '\t'),
+			});
 		});
 	}
-	catch (err) {
-		console.log(err);
+	catch (error) {
+		console.log(error);
 	}
 }
 
@@ -73,10 +87,11 @@ async function getUserLabel(t, makeSure=false) {
 			
 			return userLabel;
 		});
-	}, function() {
+	},
+	function() {
 		return setupUserLabel(t);
 	});
-};
+}
 
 async function hasFocus(t) {
 	const focusLabel = await getUserLabel(t);
@@ -89,7 +104,7 @@ async function hasFocus(t) {
 			return (label.id === focusLabel.id);
 		});
 	});
-};
+}
 
 async function getApiToken(t) {
 	return t.get('member', 'private', 'token').then(function(token) {
@@ -99,7 +114,8 @@ async function getApiToken(t) {
 		}
 		
 		return token;
-	}, function() {
+	},
+	function() {
 		startAuthorization(t);
 		return false;
 	});
@@ -107,20 +123,24 @@ async function getApiToken(t) {
 
 async function applyFilter(t) {
 	const userLabel = await getUserLabel(t);
-	return t.navigate({url: await getBoardUrl(t) + '?menu=filter&filter=label:' + userLabel.name});
+	
+	return t.navigate({
+		url: await getBoardUrl(t) + '?menu=filter&filter=label:' + userLabel.name,
+	});
 }
 
 function startAuthorization(t) {
 	return t.popup({
-		title: 'My Auth Popup',
-		url: './authorize.html',
-		args: { apiKey: '9b174ff1ccf5ca94f1c181bc3d802d4b' },
+		title:  'My Auth Popup',
 		height: 150,
+		url:    './authorize.html',
+		args:   {
+			apiKey: '9b174ff1ccf5ca94f1c181bc3d802d4b',
+		},
 	});
 }
 
 async function markAsFocus(t) {
-	const userLabel = await getUserLabel(t, true);
 	const token = await getApiToken(t);
 	if (token === false) {
 		return;
@@ -128,33 +148,44 @@ async function markAsFocus(t) {
 	
 	window.Trello.setToken(token);
 	
+	const userLabel = await getUserLabel(t, true);
+	const postData  = {
+		value: userLabel.id,
+	};
+	
 	try {
-		window.Trello.post("/cards/" + await getCardId(t) + "/idLabels", { value: userLabel.id }, null, function(error) {
-			t.alert({message: JSON.stringify(error, null, '\t')})
+		window.Trello.post("/cards/" + await getCardId(t) + "/idLabels", postData, null, function(error) {
+			t.alert({
+				message: JSON.stringify(error, null, '\t'),
+			});
 		});
 	}
-	catch (err) {
-		console.log(err);
+	catch (error) {
+		console.log(error);
 	}
-};
+}
 
 async function unmarkAsFocus(t) {
-	const userLabel = await getUserLabel(t, true);
 	const token = await getApiToken(t);
 	if (token === false) {
 		return;
 	}
 	
 	window.Trello.setToken(token);
+	
+	const userLabel = await getUserLabel(t, true);
+	
 	try {
 		window.Trello.delete("/cards/" + await getCardId(t) + "/idLabels/" + userLabel.id, {}, null, function(error) {
-			t.alert({message: JSON.stringify(error, null, '\t')})
+			t.alert({
+				message: JSON.stringify(error, null, '\t'),
+			});
 		});
 	}
-	catch (err) {
-		console.log(err);
+	catch (error) {
+		console.log(error);
 	}
-};
+}
 
 async function showFocusState(t) {
 	if (await hasFocus(t)) {
@@ -163,7 +194,7 @@ async function showFocusState(t) {
 			text:     'In focus',
 			color:    'green',
 			callback: unmarkAsFocus,
-		}
+		};
 	}
 	else {
 		return {
@@ -171,12 +202,12 @@ async function showFocusState(t) {
 			text:     'Add to focus',
 			color:    'none',
 			callback: markAsFocus,
-		}
+		};
 	}
 }
 
 TrelloPowerUp.initialize({
-	'board-buttons': function(t, options){
+	'board-buttons': function(t, options) {
 		return [
 			{
 				text: 'Focus',
@@ -185,29 +216,34 @@ TrelloPowerUp.initialize({
 					dark:  FILTER_ICON_DARK,
 				},
 				condition: 'edit',
-				callback: function(t){
+				callback: function(t) {
 					return applyFilter(t);
 				},
-			}
+			},
 		];
 	},
 	'card-detail-badges': function(t, options) {
-		return t.card('name').get('name').then(function(cardName){
-			return [
-				{
-					dynamic: function(){
-						return Promise.all([showFocusState(t)]).then(function(badges) {
-							return badges[0];
-						});
-					},
+		return [
+			{
+				dynamic: function() {
+					const promises = [
+						showFocusState(t),
+					];
+					
+					return Promise.all(promises).then(function(badges) {
+						return badges[0];
+					});
 				},
-			];
-		});
+			},
+		];
 	},
 	'authorization-status': function(t, options) {
-		return t.get('member', 'private', 'token').then(function(token){
+		return t.get('member', 'private', 'token').then(function(token) {
 			const isAuthorized = (token !== undefined);
-			return { authorized: isAuthorized };
+			
+			return {
+				authorized: isAuthorized,
+			};
 		});
 	},
 	'show-authorization': function(t, options) {
@@ -215,5 +251,5 @@ TrelloPowerUp.initialize({
 	},
 }, {
 	appKey:  '9b174ff1ccf5ca94f1c181bc3d802d4b',
-	appName: 'Focus cards'
+	appName: 'Focus cards',
 });

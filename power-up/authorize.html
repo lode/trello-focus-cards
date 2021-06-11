@@ -16,13 +16,14 @@
 		<script>
 			const Promise = TrelloPowerUp.Promise;
 			const t = TrelloPowerUp.iframe();
+			
 			const queryParameters = new URLSearchParams({
-				key: t.arg('apiKey'),
-				expiration: 'never',
-				name: 'Focus cards',
-				scope: 'read,write',
+				key:             t.arg('apiKey'),
+				expiration:      'never',
+				name:            'Focus cards',
+				scope:           'read,write',
 				callback_method: 'fragment',
-				return_url: 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/auth-success.html',
+				return_url:      'https://www.lodeclaassen.nl/trello-focus-cards/power-up/auth-success.html',
 			});
 			const trelloAuthUrl = 'https://trello.com/1/authorize?' + queryParameters.toString();
 			
@@ -31,12 +32,16 @@
 			}
 			
 			document.getElementById('auth-btn').addEventListener('click', function() {
-				t.authorize(trelloAuthUrl, { height: 680, width: 580, validToken: tokenLooksValid })
-				.then(function(token){
-					return t.set('member', 'private', 'token', token);
-				})
-				.then(function(){
-					return t.closePopup();
+				const options = {
+					height:     680,
+					width:      580,
+					validToken: tokenLooksValid,
+				};
+				
+				t.authorize(trelloAuthUrl, options).then(function(token) {
+					t.set('member', 'private', 'token', token).then(function() {
+						t.closePopup();
+					});
 				});
 			});
 		</script>
