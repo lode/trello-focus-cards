@@ -1,44 +1,44 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
-    <script src="https://p.trellocdn.com/power-up.min.js"></script>
-  </head>
-  <body>
-    <h1>
-      Hey there! 😀
-    </h1>
-    <p>
-      Focus cards are stored in labels. To be able to manage them, we need you to authorize us to access your Trello account.
-    </p>
-    <button id="auth-btn" type="submit" class="mod-primary">Authorize access to Trello</button>
-    
-    <script>
-      const Promise = TrelloPowerUp.Promise;
-      const t = TrelloPowerUp.iframe();
-      const queryParameters = new URLSearchParams({
-        key: t.arg('apiKey'),
-        expiration: 'never',
-        name: 'Focus cards',
-        scope: 'read,write',
-        callback_method: 'fragment',
-        return_url: 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/auth-success.html',
-      });
-      const trelloAuthUrl = 'https://trello.com/1/authorize?' + queryParameters.toString();
-      
-      function tokenLooksValid(token) {
-        return /^[0-9a-f]{64}$/.test(token);
-      }
-
-      document.getElementById('auth-btn').addEventListener('click', function(){
-        t.authorize(trelloAuthUrl, { height: 680, width: 580, validToken: tokenLooksValid })
-        .then(function(token){
-          return t.set('member', 'private', 'token', token);
-        })
-        .then(function(){
-          return t.closePopup();
-        });
-      });
-    </script>
-  </body>
+	<head>
+		<link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+		<script src="https://p.trellocdn.com/power-up.min.js"></script>
+	</head>
+	<body>
+		<h1>
+			Hey there! 😀
+		</h1>
+		<p>
+			Focus cards are stored in labels. To be able to manage them, we need you to authorize us to access your Trello account.
+		</p>
+		<button id="auth-btn" type="submit" class="mod-primary">Authorize access to Trello</button>
+		
+		<script>
+			const Promise = TrelloPowerUp.Promise;
+			const t = TrelloPowerUp.iframe();
+			const queryParameters = new URLSearchParams({
+				key: t.arg('apiKey'),
+				expiration: 'never',
+				name: 'Focus cards',
+				scope: 'read,write',
+				callback_method: 'fragment',
+				return_url: 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/auth-success.html',
+			});
+			const trelloAuthUrl = 'https://trello.com/1/authorize?' + queryParameters.toString();
+			
+			function tokenLooksValid(token) {
+				return /^[0-9a-f]{64}$/.test(token);
+			}
+			
+			document.getElementById('auth-btn').addEventListener('click', function() {
+				t.authorize(trelloAuthUrl, { height: 680, width: 580, validToken: tokenLooksValid })
+				.then(function(token){
+					return t.set('member', 'private', 'token', token);
+				})
+				.then(function(){
+					return t.closePopup();
+				});
+			});
+		</script>
+	</body>
 </html>
