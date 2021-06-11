@@ -17,14 +17,17 @@
 			const Promise = TrelloPowerUp.Promise;
 			const t = TrelloPowerUp.iframe();
 			
+			const currentUrl      = window.location.toString();
+			const baseUrl         = currentUrl.substring(0, currentUrl.lastIndexOf('/'));
 			const queryParameters = new URLSearchParams({
 				key:             t.arg('apiKey'),
 				expiration:      'never',
 				name:            'Focus cards',
 				scope:           'read,write',
 				callback_method: 'fragment',
-				return_url:      'https://www.lodeclaassen.nl/trello-focus-cards/power-up/auth-success.html',
+				return_url:      baseUrl + '/auth-success.html',
 			});
+			
 			const trelloAuthUrl = 'https://trello.com/1/authorize?' + queryParameters.toString();
 			
 			function tokenLooksValid(token) {

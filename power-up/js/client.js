@@ -1,8 +1,10 @@
 /* global TrelloPowerUp */
 
 var Promise = TrelloPowerUp.Promise;
-const FILTER_ICON_LIGHT = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/img/filter-icon-light.png';
-const FILTER_ICON_DARK = 'https://www.lodeclaassen.nl/trello-focus-cards/power-up/img/filter-icon-dark.png';
+
+const CDN_BASE_URL      = document.getElementById('js-cdn-base-url').href;
+const FILTER_ICON_LIGHT = CDN_BASE_URL + 'filter-icon-light.png';
+const FILTER_ICON_DARK  = CDN_BASE_URL + 'filter-icon-dark.png';
 
 function getBoardId(t) {
 	return t.board('id').then(function(board) {
